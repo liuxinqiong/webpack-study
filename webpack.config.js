@@ -1,6 +1,8 @@
 var webpack = require('webpack')
 var path = require('path')
 var extractTextWebpackPlugin = require('extract-text-webpack-plugin')
+var purifyCSS = require('purifycss-webpack')
+var glob = require('glob-all')
 
 module.exports = {
     entry: {
@@ -12,8 +14,8 @@ module.exports = {
     },
     output: {
         // filename: '[name].[hash:8].js'
-        path: path.resolve(__dirname, './dist'),
-        publicPath: './dist/',
+        path: path.resolve(__dirname, 'dist'),
+        // publicPath: 'dist/',
         filename: '[name].bundle.js',
         chunkFilename: '[name].chunk.js' // 代码分隔名称
     },
@@ -34,7 +36,7 @@ module.exports = {
             //     exclude: '/node_modules/'
             // },
             {
-                test: /\.(css|less)$/,
+                test: /\.less$/,
                 use: extractTextWebpackPlugin.extract({
                     // 不提取的话，使用什么方式呢
                     fallback: {
@@ -52,8 +54,8 @@ module.exports = {
                             loader: 'css-loader',
                             options: {
                                 // minimize: true,
-                                modules: true,
-                                localIdentName: '[path][name]_[local]_[hash:base64:5]'
+                                // modules: true,
+                                // localIdentName: '[path][name]_[local]_[hash:base64:5]'
                             }
                             // loader: 'file-loader'
                         },
@@ -63,6 +65,10 @@ module.exports = {
                                 // 执行插件是给postcss使用的
                                 ident: 'postcss',
                                 plugins: [
+                                    require('postcss-sprites')({
+                                        spritePath: 'dist/assets/imgs/sprites',
+                                        retina: true
+                                    }),
                                     // require('autoprefixer')(),
                                     require('postcss-cssnext')()// 内置autoprefixer
                                 ]
@@ -97,6 +103,33 @@ module.exports = {
                 //         loader: 'less-loader'
                 //     }
                 // ]
+            },
+            {
+                test: /\.(png|jpg|jpeg|gif)$/,
+                use: [
+                    {
+                        // loader: 'file-loader',
+                        // options: {
+                        //     // publicPath: '',
+                        //     // outputPath: 'dist/',
+                        //     useRelativePath: true
+                        // }
+                        loader: 'url-loader',
+                        options: {
+                            name: '[name]-[hash:5].[ext]',
+                            limit: 1024 * 100,
+                            useRelativePath: true
+                        }
+                    },
+                    {
+                        loader: 'img-loader',
+                        options: {
+                            pngquant: {
+                                quality: 80
+                            }
+                        }
+                    }
+                ]
             }
         ]
     },
@@ -128,6 +161,15 @@ module.exports = {
             // 指定提取范围，默认false，只会提出初始化的css，后期异步加载的不会提取
             // 可以指定范围声明哪些提取到初始化代码中，否则跟随组件动态加载
             allChunks: false
-        })
+        }),
+
+        new purifyCSS({
+            paths: glob.sync([
+                path.join(__dirname, './*.html'),
+                path.join(__dirname, './src/*.js')
+            ])
+        }),
+
+        new webpack.optimize.UglifyJsPlugin()
     ]
 }

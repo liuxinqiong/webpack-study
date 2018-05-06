@@ -343,3 +343,32 @@ new webpack.optimize.CommonsChunkPlugin({
   * postcss-import
   * postcss-url
   * postcss-assets
+
+Tree Shaking
+* 使用场景
+  * 常规优化
+  * 引入第三方库的某一个功能
+* JS Tree Shaking
+  * webpack.optimize.uglifyJS
+  * webpack打包后，会将用到的和没用到的通过注释的方式进行标注
+  * 优化第三方库时，如果不是采用ES6 Module的方式，则可以压缩，但是无法取出无效代码，此时可以寻找第三方库对应的ES6版本，如果还是不行，那就善用搜索，不同库解决方法不一致
+* CSS Tree Shaking
+  * purify css（purifycss-webpack），options有
+  * paths:glob.sync([])
+  * glob-all：同时处理多个路径
+  * 安装：npm install purifycss-webpack glob-all --save-dev
+  * 插件也是有顺序之分的，purify要在extract后面
+  * 搞了好久，我好像不生效
+
+文件处理
+* 图片文件，字体文件，第三方JS库
+* 图片处理
+  * CSS中引入图片
+  * 自动合成雪碧图
+  * 压缩图片
+  * base64编码
+  * file-loader
+  * url-loader：对于低于limit值的图片采用base64
+  * img-loader：压缩图片
+  * postcss-sprites：合成雪碧图
+* postcss-sprites作为postcss-loader的plugin使用，可以通过spritePath设置生成的位置，会有两张图片，压缩和不压缩的区别。还有一个有意思的参数是retina，设置为true会自动帮助我们处理retina屏的效果，但是对文件需要命名为@2x结尾，css需要修改尺寸为之前的一半

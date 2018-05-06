@@ -9,6 +9,53 @@ html{
     width: 200px;
     border-radius: 4px;
     background-color: #333;
-    composes: bigBox from './common.css';
+    // composes: bigBox from './common.css';
     transition:transform 1s;
+}
+
+.bigBox{
+    height: 400px;
+    width: 400px;
+    border: 5px;
+    color: #000;
+
+    > div{
+        width: 128px;
+        height: 128px;
+        float: left;
+    }
+
+    .ani1{
+        background: url('../assets/imgs/1.jpeg') no-repeat;
+    }
+    .ani2{
+        background: url('../assets/imgs/2.jpg') no-repeat;
+    }
+    .ani3{
+        background: url('../assets/imgs/3.jpeg') no-repeat;
+    }
+    .ani4{
+        background: url('../assets/imgs/4.jpg') no-repeat;
+    }
+    .ani5{
+        background: url('../assets/imgs/5.jpg') no-repeat;
+    }
+}
+
+.bigBox1 {
+    height: 400px;
+    width: 400px;
+    border: 5px;
+}
+
+.bigBox2 {
+    height: 400px;
+    width: 400px;
+    border: 5px;
+}
+
+.bigBox3 {
+    height: 400px;
+    width: 400px;
+    border: 5px;
 }
