@@ -1,0 +1,16 @@
+body{
+    font-size: 30px
+}
+
+.bigBox{
+    border: 2px solid yellow;
+}
+
+/* 未来的css */
+:root{
+    --mainColor:red
+}
+
+a{
+    color:var(--mainColor)
+}

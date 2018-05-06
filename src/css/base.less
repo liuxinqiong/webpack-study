@@ -1,0 +1,14 @@
+@homecolor:#ff3333;
+
+html{
+    background-color: @homecolor
+}
+
+.box{
+    height: 200px;
+    width: 200px;
+    border-radius: 4px;
+    background-color: #333;
+    composes: bigBox from './common.css';
+    transition:transform 1s;
+}
