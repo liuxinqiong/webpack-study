@@ -4,6 +4,9 @@ var extractTextWebpackPlugin = require('extract-text-webpack-plugin')
 var purifyCSS = require('purifycss-webpack')
 var glob = require('glob-all')
 
+// path.join 连接任意多个路径字符串，同时也会对路径进行规范化
+// path.resolve 类似于对这些路径逐一进行cd操作，cd操作时和join的区别
+
 module.exports = {
     entry: {
         app: './src/app.js'
@@ -15,7 +18,7 @@ module.exports = {
     output: {
         // filename: '[name].[hash:8].js'
         path: path.resolve(__dirname, 'dist'),
-        // publicPath: 'dist/',
+        publicPath: 'dist/',// 或者使用CDN，对于按需加载很关键，不然会找不到资源
         filename: '[name].bundle.js',
         chunkFilename: '[name].chunk.js' // 代码分隔名称
     },
@@ -49,6 +52,7 @@ module.exports = {
                             transform: './css.transform.js'
                         }
                     },
+                    publicPath: './',
                     use: [
                         {
                             loader: 'css-loader',
@@ -105,12 +109,12 @@ module.exports = {
                 // ]
             },
             {
-                test: /\.(png|jpg|jpeg|gif)$/,
+                test: /\.(png|jpe?g|gif|svg)$/,
                 use: [
                     {
                         // loader: 'file-loader',
                         // options: {
-                        //     // publicPath: '',
+                        //     // publicPath: '', // 版本更新，有问题
                         //     // outputPath: 'dist/',
                         //     useRelativePath: true
                         // }
