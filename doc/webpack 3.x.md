@@ -372,3 +372,40 @@ Tree Shaking
   * img-loader：压缩图片
   * postcss-sprites：合成雪碧图
 * postcss-sprites作为postcss-loader的plugin使用，可以通过spritePath设置生成的位置，会有两张图片，压缩和不压缩的区别。还有一个有意思的参数是retina，设置为true会自动帮助我们处理retina屏的效果，但是对文件需要命名为@2x结尾，css需要修改尺寸为之前的一半
+
+处理第三方JS库（CDN形式或通用库，不愿意每次import）
+* 插件方式：webpack.ProvidePlugin，options为k-v的形式，k表示对象，v表示模块
+* loader方式：imports-loader，options为k-v的形式，k表示对象，v表示模块
+* window对象
+
+对于 npm 安装的库 webpack 可以直接找到，如果是我们自己的库呢，则需要使用resolve字段的别名功能指定模块名和模块位置
+```js
+resolve: {
+    alias: {
+        // 美元符结尾表示准确匹配
+        jquery$: path.resolve(__dirname, 'src/lib/jquery.min.js')
+    }
+},
+```
+
+
+HTML in Webpack
+* 自动生成HTML
+  * HtmlWebpackPlugin，npm install html-webpack-plugin --save-dev
+  * 常用options
+    * template
+    * filename
+    * minify
+    * chunks
+    * inject
+* HTML引入图片
+  * html-loader：npm install html-loader --save-dev
+  * 常用options
+    * attrs:[img:src]
+  * 其他方式：不用html-loader也可以，只是写法比较麻烦，在html中使用${require('path-to-img')}
+* 提前载入webpack加载代码
+  * ~~inline-manifest-webpack-plugin~~
+  * html-webpack-inline-chunk-plugin
+
+
+babel "transform-runtime"插件？ 添加报错 $export is not a function
