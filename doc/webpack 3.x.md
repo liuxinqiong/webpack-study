@@ -409,3 +409,118 @@ HTML in Webpack
 
 
 babel "transform-runtime"插件？ 添加报错 $export is not a function
+
+搭建本地开发环境，有三种方式
+* webpack watch mode
+  * 直接添加 --watch(-w)参数即可，webpack --watch
+  * 检测文件改动，自动重新打包
+  * 本质并没有开web服务器，只能用打开本地文件的方式打开html
+  * npm脚本："dev": "webpack -w --progress --display-reasons --color"
+* webpack-dev-server
+  * 官方提供的开发服务器
+  * live reload
+  * 不可以打包文件，内存中运行
+  * 路径重定向
+  * https
+  * 浏览器中直接显示编译错误
+  * 接口代理
+  * 模块热更新
+    * 保持应用数据状态
+    * 节省调试时间
+    * 样式调试更快
+    * hot置为true
+    * 模块热更新处理代码：module.hot module.hot.accept module.hot.decline（loader集成）
+      * css通过style-loader
+      * js框架相关loader集成
+      * react -> react-hot-loader
+      * vue -> vue-loader
+      * angular -> angular-hot-loader
+    * webpack.HotModuleReplacementPlugin
+    * webpack.NamedModulesPlugin 查看模块相对路径
+  * devServer字段
+    * inline
+    * contentBase
+    * port
+    * historyApiFallback
+    * https
+    * proxy：集成的第三方，http-proxy-middleware，options常用有
+      * target
+      * changeOrigin：默认false
+      * headers
+      * logLevel
+      * pathRewrite
+    * hot
+    * openpage
+    * lazy
+    * overlay：错误提示遮照
+  * 需要单独安装：npm install webpack-dev-server --save-dev
+  * 有版本对应关系，否则报错，webpack 3.x 对应 webpack-dev-server 2.x，4.x 对应 3.x
+* express + webpack-dev-middleware
+
+Source Map调试（JS、CSS），两种方式
+* 设置Devtool（主要有7种可能的值）
+  * 开发环境 development
+    * eval 最快的
+    * eval-source-map
+    * cheap-eval-source-map
+    * cheap-module-eval-source-map：折中推荐方案
+  * production（线上bug）
+    * source-map
+    * hidden-source-map
+    * nosource-source-map
+* 通过插件（了解即可）
+  * webpack.SourceMapDevToolPlugin
+  * webpack.EvalSourceMapDevToolPlugin
+* CSS处理开启Devtool，还需要开启对应loader
+  * css-loader.options.sourcemap
+  * less-loader.options.sourcemap
+  * sass-loader.options.sourcemap
+
+clean-webpack-plugin：保证每次只有最新打包的文件
+
+EsLint 代码检查
+* 安装eslint、eslint-loader，eslint-plugin-html、eslint-friendly-formatter
+* 配置eslint
+  * webpack config新增eslint-loader
+  * .eslintrc.* 或 package.json 中的 eslintConfig
+* 规则：Javascript Standard Style
+  * 需要安装 eslint-config-standard
+  * 其他
+    * eslint-plugin-promise
+    * eslint-plugin-standard
+    * eslint-plugin-import
+    * eslint-plugin-node
+  * 或者你可以使用其他规范，eslint-config-xxx
+    * arbnb
+* eslint-loader
+  * options.failOnWarning
+  * options.failOnError
+  * options.formatter
+  * options.outputReport
+* npm install eslint eslint-loader eslint-plugin-html eslint-friendly-formatter --save-dev
+* npm install eslint-config-standard eslint-plugin-promise eslint-plugin-node eslint-plugin-import eslint-plugin-standard --save-dev
+
+开发环境和生产环境
+
+开发环境
+* 模块热更新
+* sourceMap
+* 接口代理
+* 代码规范检查
+
+生产环境
+* 提取公用代码
+* 压缩混淆
+* 文件压缩 或 Base64 编码
+* tree-shaking 去除无用代码
+
+共同点
+* 同样的入口
+* 同样的代码处理（loader处理）
+* 同样的解析配置
+
+how to do
+* webpack-merge
+* webpack.dev.conf.js
+* webpack.prod.conf.js
+* webpack.common.conf.js
