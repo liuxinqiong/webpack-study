@@ -524,3 +524,12 @@ how to do
 * webpack.dev.conf.js
 * webpack.prod.conf.js
 * webpack.common.conf.js
+
+middleware搭建开发环境
+* express or koa
+* webpack-dev-middleware
+  * 在webpack 3.x中只能用2.x版本，否则报错
+* webpack-hot-middleware
+* http-proxy-middleware
+* connect-history-api-fallback
+* opn：自动打开浏览器

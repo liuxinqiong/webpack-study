@@ -3,7 +3,7 @@ module.exports = {
     extends: 'standard',
     plugins: ['html'],
     env: {
-        browsers: true,
+        browser: true,
         node: true
     },
     globals: {
@@ -11,6 +11,6 @@ module.exports = {
     },
     rules: {
         indent: ['error', 4],
-        'eol-last': ['error', 'nerver'],// 文件结尾换行
+        'eol-last': ['error', 'never'],// 文件结尾换行
     }
 }
