@@ -9,25 +9,25 @@ const extractTextWebpackPlugin = require('extract-text-webpack-plugin')
 var webpack = require('webpack')
 
 const generateConfig = env => {
-
     const ectractLess = new extractTextWebpackPlugin({
         filename: 'css/[name]-bundle-[hash:5].css'
     })
 
     const scriptLoader = [{
-        loader: 'babel-loader',
-    }].concat(env === 'production' ? [] : {
-        loader: 'eslint-loader',
-        options: {
-            formatter: require('eslint-friendly-formatter')
-        }
-    });
+        loader: 'babel-loader'
+    }]
+    // .concat(env === 'production' ? [] : {
+    //     loader: 'eslint-loader',
+    //     options: {
+    //         formatter: require('eslint-friendly-formatter')
+    //     }
+    // })
 
     const cssLoaders = [
         {
             loader: 'css-loader',
             options: {
-                sourceMap: env === 'development',
+                sourceMap: env === 'development'
                 // minimize: true,
                 // modules: true,
                 // localIdentName: '[path][name]_[local]_[hash:base64:5]'
@@ -50,7 +50,7 @@ const generateConfig = env => {
         {
             loader: 'less-loader',
             options: {
-                sourceMap: env === 'development',
+                sourceMap: env === 'development'
             }
         }
     ]
@@ -60,7 +60,7 @@ const generateConfig = env => {
         use: cssLoaders
     }) : [{
         loader: 'style-loader'
-    }].concat(cssLoaders);
+    }].concat(cssLoaders)
 
     const fileLoader = env === 'development' ? [{
         loader: 'file-loader',
@@ -83,7 +83,7 @@ const generateConfig = env => {
         },
         output: {
             path: path.resolve(__dirname, '../dist'),
-            publicPath: '/',// 或者使用CDN，对于按需加载很关键，不然会找不到资源
+            publicPath: '/', // 或者使用CDN，对于按需加载很关键，不然会找不到资源
             filename: 'js/[name]-bundle-[hash:5].js',
             chunkFilename: 'js/[name]-bundle-[hash:5].js' // 代码分隔名称
         },
@@ -97,7 +97,7 @@ const generateConfig = env => {
             rules: [
                 {
                     test: /\.js$/,
-                    exclude: [path.resolve(__dirname, '../src/libs'), '/node_modules/'],
+                    exclude: [path.resolve(__dirname, '../src/lib'), '/node_modules/'],
                     include: [path.resolve(__dirname, '../src')],
                     use: scriptLoader
                 },
@@ -136,7 +136,7 @@ const generateConfig = env => {
             }),
             new webpack.ProvidePlugin({
                 $: 'jquery'
-            }),
+            })
         ]
     }
 }

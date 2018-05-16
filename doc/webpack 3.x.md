@@ -533,3 +533,42 @@ middleware搭建开发环境
 * http-proxy-middleware
 * connect-history-api-fallback
 * opn：自动打开浏览器
+
+打包结果分析
+* 官方工具：office analyse tool
+  * chunk信息
+  * 优化建议
+  * mac：webpack --profile --json > stats.json
+  * windows：webpack --profile --json | Out-file 'stats.json' -Encoding OEM
+  * 将json上传到地址：http://webpack.github.io/analyse
+* 社区工具：webpack-bundle-analyzer
+  * 可视化的看到是如何打包的
+  * 方式一：BundleAnalyzerPlugin
+  * 方式二：webpack-bundle-analyzer stats.json
+* 更好的帮助我们提取公用代码和打包策略
+
+打包速度优化
+* 文件多？依赖多？页面多？使用loader的方式和范围
+* 原则
+  * 并行化
+  * 减少任务量（限定范围）
+  * 缓存
+  * 跟进版本
+* 分开 vendor 和 app
+  * DllPlugin
+  * DllReferencePlugin
+* UglifyJsPlugin 非常耗时，开启并行配置
+  * parallel
+  * cache
+* HappyPack
+  * 串行转并行
+  * HappyPack.ThreadPool
+* babel-loader 非常耗时
+  * cacheDirectory 开启缓存
+  * include
+  * exclude
+* 其他
+  * 减少resolve
+  * Devtool：去除sourcemap，耗时
+  * cache-loader
+  * 升级node和webpack

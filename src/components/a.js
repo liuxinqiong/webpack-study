@@ -1,6 +1,6 @@
 import '../css/components/a.less'
 
-export function renderA() {
+export function renderA () {
     let a = document.getElementById('one')
 
     a.innerHTML = `<ul>
@@ -10,12 +10,12 @@ export function renderA() {
     </ul>`
 }
 
-export function componentA() {
+export function componentA () {
     let ul = document.createElement('ul')
     ul.innerHTML = `
         <li>11</li>
         <li>2</li>
         <li>3</li>
     `
-    return ul;
+    return ul
 }

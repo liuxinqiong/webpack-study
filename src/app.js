@@ -3,10 +3,10 @@ import common from './css/common.less'
 
 import { a } from './common/util'
 import { chunk } from 'lodash-es'
-console.log(a)
-chunk([1, 2, 3, 4, 5, 6], '7')
 
 import { renderA, componentA } from './components/a'
+console.log(a)
+chunk([1, 2, 3, 4, 5, 6], '7')
 
 // base.use()
 // base.unuse()
@@ -24,7 +24,7 @@ app.appendChild(div)
 // app.innerHTML = "<div class='" + base.box + "'></div>";
 
 var one = document.getElementById('one')
-var list = componentA();
+var list = componentA()
 one.appendChild(list)
 
 $('div').addClass('new')
@@ -39,14 +39,14 @@ $.get('/comments/show', {
 $.get('/msg/index', {
     format: 'cards'
 }, function (data) {
-    console.log(data);
+    console.log(data)
 })
 
 if (module.hot) {
     // module.hot.accept()
     module.hot.accept('./components/a', function () {
         one.removeChild(list)
-        let componentA = require('./components/a').componentA;
+        let componentA = require('./components/a').componentA
         let newList = componentA()
         one.appendChild(newList)
         list = newList

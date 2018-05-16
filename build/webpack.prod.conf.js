@@ -4,7 +4,8 @@ var purifyCSS = require('purifycss-webpack')
 var glob = require('glob-all')
 var path = require('path')
 var webpack = require('webpack')
-
+// 打包结果分析
+var webpackBundleAnalyzer = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = {
     plugins: [
@@ -26,5 +27,7 @@ module.exports = {
                 path.join(__dirname, '../src/*.js')
             ])
         }),
+
+        new webpackBundleAnalyzer()
     ]
 }
