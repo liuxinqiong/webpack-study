@@ -654,3 +654,112 @@ react 和 webpack
   ```
   * npm run test
   * npm run eject 不可逆操作
+* config/env.js：帮助我们直接在项目根目录下添加.env文件来达到直接修改环境变量的目的
+* config/polyfill.js：提供promise、fetch、Object.assign
+* 自定义配置
+  * proxy 配置：直接在package.json中增加proxy属性，配置个webpack-dev-server是一样的
+  * less 配置
+    1. 安装loader
+    2. 修改dev和prod的规则即可
+  * 热更新配置
+    1. 安装react-hot-loader
+    2. 增加 react-hot-loader/patch entry
+    3. babel-loader 增加 react-hot-loader/babel plugin
+    4. entry入口js增加代码
+
+NOTE：不知道是不是因为版本问题，现在开启热更新无需上述这么多配置，只需要在entry入口添加如下代码即可
+```js
+if(module.hot){
+  module.hot.accept()
+}
+```
+
+Angular 和 Webpack
+* Angular-cli
+  * Angular 最佳实践代码
+  * 所有项目依赖
+  * Typescript 和测试
+  * 环境变量
+* npm install -g @angular/cli
+* 非常灵活
+```shell
+ng help
+ng new ng-project
+ng new ng-project --style=less --directory=src
+ng g/generate
+ng serve(webpack dev server)
+ng build
+ng test
+ng e2e
+ng lint
+ng eject
+```
+* 接口请求代理
+```shell
+# 添加proxy.conf.json
+ng serve --proxy-config proxy.conf.json
+```
+* css预处理器
+```shell
+ng new project --style=less
+ng set defaults.styleExt less
+```
+* 第三方依赖
+```shell
+# 源文件
+npm install lodash --save
+# 声明文件
+npm install @type/lodash --save-dev
+```
+
+面试点
+* 概念
+  * webpack 和 gulp、grunt 区别
+    * 模块打包器，递归打包
+    * code-splitting
+    * 模块化（AMD/CommonJs）
+    * 全局分析
+  * 什么是bundle，什么是chunk，什么是module
+    * bundle是webpack打包出来的文件
+    * chunk时在进行模块依赖分析时，代码分割出来的代码块（代码分隔，动态加载）
+    * module是开发的单个模块
+  * 什么是loader，什么是plugin
+    * loader是用来告诉webpack如何转换处理某一类型的文件，并且引入到打包的文件中
+    * plugin是用来自定义webpack打包过程的方式，一个插件是含有apply方法的一个对象，通过这个方法可以参与到整个webpack打包的各个流程
+* 配置
+  * 如何自动生成webpack配置
+    * webpack-cli
+    * 官方脚手架
+* 开发环境
+  * webpack-dev-server和http服务如nginx有什么区别
+    * webpack-dev-server使用内存来存储webpack开发环境下的打包文件，并且可以使用模块热更新
+  * 什么是模块热更新
+    * 使得代码不用刷新浏览器就可以更新，是高级版的自动刷新浏览器
+    * websocket
+* 优化
+  * 什么是长缓存，如何做到长缓存
+    * 浏览器会自动缓存静态资源，如果代码升级或更新，最方便的方式引入新的文件名词
+    * webpack通过在output给输出的文件执行chunkhash
+    * 分离经常更新的业务代码和框架代码
+    * 通过NamedModulePlugin或是HashedModuleIdsPlugin使再次打包文件名不变
+  * 什么是tree-shaking？css可以吗？
+    * tree-shaking时指在打包中取出了那些引入了，但是在代码中没有用到的死代码
+    * uglifyJSPlugin Purify-CSS
+
+总结
+* 工程化功能
+  * 实时编译
+  * 开发服务
+  * 自动优化
+* 工程化思想
+  * 一切皆模块
+  * 极速的调试响应速度
+  * 优化应该自动完成
+* 工程化未来
+  * 零配置？
+  * 更快，更小？
+  * breaking change
+* 学到了啥
+  * webpack的使用
+  * 现在前端正确开发姿势
+  * 前端优化的思想
