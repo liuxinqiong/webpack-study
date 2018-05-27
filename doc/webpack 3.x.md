@@ -630,3 +630,27 @@ static 文件夹用来放置不需要 webpack 处理的文件
 vue-cli提供的项目模板直接集成了打包代码分析功能，运行 npm run build --report
 
 Note：vue-cli生成了css相关loader的配置，仅仅是没有安装相关的loader，使用时根据自己喜好安装即可
+
+react 和 webpack
+* 官方脚手架：create-react-app 
+* react-scripts：封装了npm和webpack，不能直接修改，需要运行 npm run eject 弹出配置
+* 功能
+  * 支持es6和jsx
+  * 动态import
+  * fetch(polyfill)
+  * 支持proxy
+  * 支持postcss
+  * 支持eslint
+  * 支持测试
+  * 不支持 react hot-reloading(修改css可以热更新)
+  * 弱支持css预处理器
+* 命令
+  * npm start 启动开发服务器
+  * npm run build 打包发布
+  ```shell
+  # 基于打包结果启动本地服务器
+  npm install -g serve
+  serve -s build
+  ```
+  * npm run test
+  * npm run eject 不可逆操作
