@@ -572,3 +572,61 @@ middleware搭建开发环境
   * Devtool：去除sourcemap，耗时
   * cache-loader
   * 升级node和webpack
+
+长缓存优化
+* 场景一：业务代码变化、vendor变化
+  * 提取vendor
+  * hash -> chunkhash
+  * 提取 webpack runtime（其实可以直接inline到html中）
+* 场景二：当业务import新的模块，模块顺序发生变化，vendor chunkhash也会变化
+  * 原因，webpack会给每个chunk一个ID，当顺序发生改变时，ID也会改变，导致chunkhash发生变化
+  * 不使用ID，使用name
+  * NamedChunksPlugin
+  * NamedModulesPlugin
+* 场景三：动态引入模块时，vendor hash变化
+  * 定义动态模块的chunkName
+
+多页面配置
+* 可能需要配合老项目使用
+* 特点
+  * 多入口entry
+  * 多页面html
+  * 每个页面不同的chunk
+  * 每个页面不同的参数
+* 实现方式
+  * 多配置
+    * webpack 3.1.0 支持
+    * parallel-webpack：并行处理没有关系的多份配置
+    * 优点
+      * 可以使用parallel-webpack提高速度
+        * parallel-webpack --watch
+        * parallel-webpack --config
+        * ...和官方webpack差不多
+      * 配置更加灵活独立
+    * 缺点
+      * 不能多页面之间共享代码（公共代码提取）
+  * 单配置
+    * 优点
+      * 共享各个entry之间的公共代码
+    * 缺点
+      * 打包速度慢
+      * 输出内容比较复杂
+
+vue 和 webpack
+* 脚手架：vue-cli
+* 项目模板
+  * simple
+  * webpack
+  * webpack-simple
+  * browserify
+  * browserify-simple
+* 如何使用
+  * vue init templateName projectName
+  * vue init gitRepo projectName
+* 配置文件
+
+static 文件夹用来放置不需要 webpack 处理的文件
+
+vue-cli提供的项目模板直接集成了打包代码分析功能，运行 npm run build --report
+
+Note：vue-cli生成了css相关loader的配置，仅仅是没有安装相关的loader，使用时根据自己喜好安装即可

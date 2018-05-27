@@ -79,13 +79,14 @@ const generateConfig = env => {
 
     return {
         entry: {
-            app: './src/app.js'
+            app: './src/app.js',
+            vendor: ['react']
         },
         output: {
             path: path.resolve(__dirname, '../dist'),
             publicPath: '/', // 或者使用CDN，对于按需加载很关键，不然会找不到资源
-            filename: 'js/[name]-bundle-[hash:5].js',
-            chunkFilename: 'js/[name]-bundle-[hash:5].js' // 代码分隔名称
+            filename: 'js/[name]-bundle-[chunkhash:5].js',
+            chunkFilename: 'js/[name]-bundle-[chunkhash:5].js' // 代码分隔名称
         },
         resolve: {
             alias: {

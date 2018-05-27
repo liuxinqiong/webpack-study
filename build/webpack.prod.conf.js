@@ -9,9 +9,22 @@ var webpackBundleAnalyzer = require('webpack-bundle-analyzer').BundleAnalyzerPlu
 
 module.exports = {
     plugins: [
+        new cleanWebpackPlugin(['dist'], {
+            root: path.resolve(__dirname, '../'),
+            verbose: true
+        }),
+
+        new webpack.NamedChunksPlugin(),
+
+        new webpack.NamedModulesPlugin(),
+
         new webpack.optimize.UglifyJsPlugin(),
 
-        new cleanWebpackPlugin(['dist']),
+        // plugins 也是有顺序的，这里vendor要在mainifest之前，否则会找不到vendor
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor',
+            minChunks: Infinity
+        }),
 
         new webpack.optimize.CommonsChunkPlugin({
             name: 'manifest'
@@ -26,8 +39,8 @@ module.exports = {
                 path.join(__dirname, '../*.html'),
                 path.join(__dirname, '../src/*.js')
             ])
-        }),
+        })
 
-        new webpackBundleAnalyzer()
+        // new webpackBundleAnalyzer()
     ]
 }

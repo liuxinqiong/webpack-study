@@ -5,6 +5,7 @@ import { a } from './common/util'
 import { chunk } from 'lodash-es'
 
 import { renderA, componentA } from './components/a'
+import react from 'react'
 console.log(a)
 chunk([1, 2, 3, 4, 5, 6], '7')
 
