@@ -353,7 +353,7 @@ Tree Shaking
   * webpack打包后，会将用到的和没用到的通过注释的方式进行标注
   * 优化第三方库时，如果不是采用ES6 Module的方式，则可以压缩，但是无法取出无效代码，此时可以寻找第三方库对应的ES6版本，如果还是不行，那就善用搜索，不同库解决方法不一致
 * CSS Tree Shaking
-  * purify css（purifycss-webpack），options有
+  * purify css（purify-css-webpack），options有
   * paths:glob.sync([])
   * glob-all：同时处理多个路径
   * 安装：npm install purifycss-webpack glob-all --save-dev
@@ -528,7 +528,7 @@ how to do
 middleware搭建开发环境
 * express or koa
 * webpack-dev-middleware
-  * 在webpack 3.x中只能用2.x版本，否则报错
+  * 在webpack 3.x 中只能用 2.x 版本，否则报错
 * webpack-hot-middleware
 * http-proxy-middleware
 * connect-history-api-fallback
