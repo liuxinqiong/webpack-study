@@ -1,0 +1,1 @@
+export const self = 'this is B'
